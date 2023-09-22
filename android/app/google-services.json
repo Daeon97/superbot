@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "138059811628",
+    "project_id": "superbot-c4b75",
+    "storage_bucket": "superbot-c4b75.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:138059811628:android:ee12e8dfc004321d66ba89",
+        "android_client_info": {
+          "package_name": "com.engels_immanuel.superbot"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDxqXXHVGZ4jFvhLLsbbdnputHBDmKAjVs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
