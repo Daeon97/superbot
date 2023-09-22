@@ -22,10 +22,11 @@ class App extends StatelessWidget {
             useMaterial3: true,
             colorScheme: ColorScheme.fromSeed(
               seedColor: baseColor,
+              // brightness: Brightness.dark,
             ),
           ),
           routes: {
-            defaultScreenRoute: (_) => const AuthScreen(),
+            defaultScreenRoute: (_) => const OnboardingScreen(),
             onboardingScreenRoute: (_) => const OnboardingScreen(),
             authScreenRoute: (_) => const AuthScreen(),
             chatScreenRoute: (_) => const ChatScreen(),

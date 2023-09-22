@@ -1,4 +1,4 @@
-// ignore_for_file: public_member_api_docs
+// ignore_for_file: public_member_api_docs, lines_longer_than_80_chars
 
 const welcome = 'Welcome';
 const createAccount = 'Create Account';
@@ -22,3 +22,8 @@ const fieldCannotBeEmpty = 'This field cannot be empty';
 const passwordMismatch = 'Passwords do not match';
 const passwordTooShort = 'Password should be longer than 8 characters';
 const confirmPassword = 'Confirm password';
+const introHead = 'Welcome to Smartbot';
+const introSub =
+    'A platform that connects undergraduate and postgraduate students working on their projects with their project supervisors via an interactive chat-bot';
+const iAmAStudent = 'I am a student';
+const iAmASupervisor = 'I am a supervisor';

@@ -66,312 +66,314 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   @override
-  Widget build(BuildContext context) => SingleChildScrollView(
-        child: Form(
-          key: _formKey,
-          child: Padding(
-            padding: const EdgeInsetsDirectional.symmetric(
-              horizontal: spacing,
-            ),
-            child: Column(
-              children: [
-                const SizedBox(
-                  height: largeSpacing,
-                ),
-                Align(
-                  alignment: AlignmentDirectional.topStart,
-                  child: Text(
-                    createAccount,
-                    style: Theme.of(context).textTheme.headlineLarge,
+  Widget build(BuildContext context) => Center(
+    child: SingleChildScrollView(
+          child: Form(
+            key: _formKey,
+            child: Padding(
+              padding: const EdgeInsetsDirectional.symmetric(
+                horizontal: spacing,
+              ),
+              child: Column(
+                children: [
+                  const SizedBox(
+                    height: largeSpacing,
                   ),
-                ),
-                const SizedBox(
-                  height: largeSpacing,
-                ),
-                TextFormField(
-                  controller: _nameController,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  keyboardType: TextInputType.name,
-                  textInputAction: TextInputAction.next,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: name,
-                    prefixIcon: Icon(
-                      Icons.person,
+                  Align(
+                    alignment: AlignmentDirectional.topStart,
+                    child: Text(
+                      createAccount,
+                      style: Theme.of(context).textTheme.headlineLarge,
                     ),
                   ),
-                  validator: (value) {
-                    if (value?.isEmpty ?? true) {
-                      return fieldCannotBeEmpty;
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(
-                  height: largeSpacing,
-                ),
-                TextFormField(
-                  controller: _emailController,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  keyboardType: TextInputType.emailAddress,
-                  textInputAction: TextInputAction.done,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: email,
-                    prefixIcon: Icon(
-                      Icons.email,
-                    ),
+                  const SizedBox(
+                    height: largeSpacing,
                   ),
-                  validator: (value) {
-                    if (value?.isEmpty ?? true) {
-                      return fieldCannotBeEmpty;
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(
-                  height: largeSpacing,
-                ),
-                ValueListenableBuilder<String?>(
-                  valueListenable: _degreeTypeNotifier,
-                  builder: (_, degreeTypeNotifierValue, __) =>
-                      DropdownButtonFormField<String>(
+                  TextFormField(
+                    controller: _nameController,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
-                    value: degreeTypeNotifierValue,
+                    keyboardType: TextInputType.name,
+                    textInputAction: TextInputAction.next,
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),
-                      labelText: degreeType,
+                      labelText: name,
                       prefixIcon: Icon(
-                        Icons.school,
+                        Icons.person,
                       ),
                     ),
-                    items: List<DropdownMenuItem<String>>.generate(
-                      degreeTypeDropdownOptionsLength,
-                      (index) => DropdownMenuItem<String>(
-                        value: switch (index) {
-                          degreeTypeFirstDropdownItemIndex => undergraduate,
-                          _ => postgraduate,
-                        },
-                        child: Text(
-                          switch (index) {
+                    validator: (value) {
+                      if (value?.isEmpty ?? true) {
+                        return fieldCannotBeEmpty;
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(
+                    height: largeSpacing,
+                  ),
+                  TextFormField(
+                    controller: _emailController,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    keyboardType: TextInputType.emailAddress,
+                    textInputAction: TextInputAction.done,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: email,
+                      prefixIcon: Icon(
+                        Icons.email,
+                      ),
+                    ),
+                    validator: (value) {
+                      if (value?.isEmpty ?? true) {
+                        return fieldCannotBeEmpty;
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(
+                    height: largeSpacing,
+                  ),
+                  ValueListenableBuilder<String?>(
+                    valueListenable: _degreeTypeNotifier,
+                    builder: (_, degreeTypeNotifierValue, __) =>
+                        DropdownButtonFormField<String>(
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      value: degreeTypeNotifierValue,
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: degreeType,
+                        prefixIcon: Icon(
+                          Icons.school,
+                        ),
+                      ),
+                      items: List<DropdownMenuItem<String>>.generate(
+                        degreeTypeDropdownOptionsLength,
+                        (index) => DropdownMenuItem<String>(
+                          value: switch (index) {
                             degreeTypeFirstDropdownItemIndex => undergraduate,
                             _ => postgraduate,
                           },
+                          child: Text(
+                            switch (index) {
+                              degreeTypeFirstDropdownItemIndex => undergraduate,
+                              _ => postgraduate,
+                            },
+                          ),
                         ),
                       ),
-                    ),
-                    onChanged: (value) {},
-                    validator: (value) {
-                      if (value?.isEmpty ?? true) {
-                        return fieldCannotBeEmpty;
-                      }
-                      return null;
-                    },
-                  ),
-                ),
-                const SizedBox(
-                  height: largeSpacing,
-                ),
-                TextFormField(
-                  controller: _courseOfStudyController,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  keyboardType: TextInputType.text,
-                  textInputAction: TextInputAction.next,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: courseOfStudy,
-                    prefixIcon: Icon(
-                      Icons.book,
-                    ),
-                  ),
-                  validator: (value) {
-                    if (value?.isEmpty ?? true) {
-                      return fieldCannotBeEmpty;
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(
-                  height: largeSpacing,
-                ),
-                TextFormField(
-                  controller: _regNoController,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  keyboardType: TextInputType.text,
-                  textInputAction: TextInputAction.next,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: regNo,
-                    prefixIcon: Icon(
-                      Icons.app_registration,
-                    ),
-                  ),
-                  validator: (value) {
-                    if (value?.isEmpty ?? true) {
-                      return fieldCannotBeEmpty;
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(
-                  height: largeSpacing,
-                ),
-                ValueListenableBuilder<bool>(
-                  valueListenable: _obscurePasswordNotifier,
-                  builder: (_, obscurePassword, __) => TextFormField(
-                    controller: _passwordController,
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    keyboardType: TextInputType.text,
-                    textInputAction: TextInputAction.done,
-                    obscureText: obscurePassword,
-                    decoration: InputDecoration(
-                      border: const OutlineInputBorder(),
-                      labelText: password,
-                      prefixIcon: const Icon(
-                        Icons.password,
-                      ),
-                      suffixIcon: IconButton(
-                        onPressed: () => switch (obscurePassword) {
-                          true => _obscurePasswordNotifier.value = false,
-                          false => _obscurePasswordNotifier.value = true,
-                        },
-                        icon: Icon(
-                          switch (obscurePassword) {
-                            true => Icons.lock,
-                            false => Icons.lock_open,
-                          },
-                        ),
-                      ),
-                    ),
-                    validator: (value) {
-                      if (value?.isEmpty ?? true) {
-                        return fieldCannotBeEmpty;
-                      } else if (value!.isNotEmpty) {
-                        if (value != _confirmPasswordController.text) {
-                          return passwordMismatch;
-                        } else if (value.length < acceptablePasswordLength) {
-                          return passwordTooShort;
+                      onChanged: (value) {},
+                      validator: (value) {
+                        if (value?.isEmpty ?? true) {
+                          return fieldCannotBeEmpty;
                         }
-
                         return null;
-                      }
-                      return null;
-                    },
-                  ),
-                ),
-                const SizedBox(
-                  height: largeSpacing,
-                ),
-                ValueListenableBuilder<bool>(
-                  valueListenable: _obscureConfirmPasswordNotifier,
-                  builder: (_, obscureConfirmPassword, __) => TextFormField(
-                    controller: _confirmPasswordController,
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    keyboardType: TextInputType.text,
-                    textInputAction: TextInputAction.done,
-                    obscureText: obscureConfirmPassword,
-                    decoration: InputDecoration(
-                      border: const OutlineInputBorder(),
-                      labelText: confirmPassword,
-                      prefixIcon: const Icon(
-                        Icons.password,
-                      ),
-                      suffixIcon: IconButton(
-                        onPressed: () => switch (obscureConfirmPassword) {
-                          true => _obscureConfirmPasswordNotifier.value = false,
-                          false => _obscureConfirmPasswordNotifier.value = true,
-                        },
-                        icon: Icon(
-                          switch (obscureConfirmPassword) {
-                            true => Icons.lock,
-                            false => Icons.lock_open,
-                          },
-                        ),
-                      ),
-                    ),
-                    validator: (value) {
-                      if (value?.isEmpty ?? true) {
-                        return fieldCannotBeEmpty;
-                      } else if (value!.isNotEmpty) {
-                        if (value != _passwordController.text) {
-                          return passwordMismatch;
-                        }
-
-                        return null;
-                      }
-                      return null;
-                    },
-                  ),
-                ),
-                const SizedBox(
-                  height: largeSpacing,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      signUp,
-                      style: Theme.of(context).textTheme.titleLarge,
-                    ),
-                    const SizedBox(
-                      width: largeSpacing,
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
-                        if (_formKey.currentState?.validate() ?? false) {
-                          //.
-                        }
                       },
-                      child: const Icon(
-                        Icons.arrow_forward,
-                        size: extraLargeSpacing,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: largeSpacing,
+                  ),
+                  TextFormField(
+                    controller: _courseOfStudyController,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    keyboardType: TextInputType.text,
+                    textInputAction: TextInputAction.next,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: courseOfStudy,
+                      prefixIcon: Icon(
+                        Icons.book,
                       ),
                     ),
-                  ],
-                ),
-                const SizedBox(
-                  height: extraLargeSpacing,
-                ),
-                RichText(
-                  text: TextSpan(
+                    validator: (value) {
+                      if (value?.isEmpty ?? true) {
+                        return fieldCannotBeEmpty;
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(
+                    height: largeSpacing,
+                  ),
+                  TextFormField(
+                    controller: _regNoController,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    keyboardType: TextInputType.text,
+                    textInputAction: TextInputAction.next,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: regNo,
+                      prefixIcon: Icon(
+                        Icons.app_registration,
+                      ),
+                    ),
+                    validator: (value) {
+                      if (value?.isEmpty ?? true) {
+                        return fieldCannotBeEmpty;
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(
+                    height: largeSpacing,
+                  ),
+                  ValueListenableBuilder<bool>(
+                    valueListenable: _obscurePasswordNotifier,
+                    builder: (_, obscurePassword, __) => TextFormField(
+                      controller: _passwordController,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      keyboardType: TextInputType.text,
+                      textInputAction: TextInputAction.done,
+                      obscureText: obscurePassword,
+                      decoration: InputDecoration(
+                        border: const OutlineInputBorder(),
+                        labelText: password,
+                        prefixIcon: const Icon(
+                          Icons.password,
+                        ),
+                        suffixIcon: IconButton(
+                          onPressed: () => switch (obscurePassword) {
+                            true => _obscurePasswordNotifier.value = false,
+                            false => _obscurePasswordNotifier.value = true,
+                          },
+                          icon: Icon(
+                            switch (obscurePassword) {
+                              true => Icons.lock,
+                              false => Icons.lock_open,
+                            },
+                          ),
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value?.isEmpty ?? true) {
+                          return fieldCannotBeEmpty;
+                        } else if (value!.isNotEmpty) {
+                          if (value != _confirmPasswordController.text) {
+                            return passwordMismatch;
+                          } else if (value.length < acceptablePasswordLength) {
+                            return passwordTooShort;
+                          }
+
+                          return null;
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                  const SizedBox(
+                    height: largeSpacing,
+                  ),
+                  ValueListenableBuilder<bool>(
+                    valueListenable: _obscureConfirmPasswordNotifier,
+                    builder: (_, obscureConfirmPassword, __) => TextFormField(
+                      controller: _confirmPasswordController,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      keyboardType: TextInputType.text,
+                      textInputAction: TextInputAction.done,
+                      obscureText: obscureConfirmPassword,
+                      decoration: InputDecoration(
+                        border: const OutlineInputBorder(),
+                        labelText: confirmPassword,
+                        prefixIcon: const Icon(
+                          Icons.password,
+                        ),
+                        suffixIcon: IconButton(
+                          onPressed: () => switch (obscureConfirmPassword) {
+                            true => _obscureConfirmPasswordNotifier.value = false,
+                            false => _obscureConfirmPasswordNotifier.value = true,
+                          },
+                          icon: Icon(
+                            switch (obscureConfirmPassword) {
+                              true => Icons.lock,
+                              false => Icons.lock_open,
+                            },
+                          ),
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value?.isEmpty ?? true) {
+                          return fieldCannotBeEmpty;
+                        } else if (value!.isNotEmpty) {
+                          if (value != _passwordController.text) {
+                            return passwordMismatch;
+                          }
+
+                          return null;
+                        }
+                        return null;
+                      },
+                    ),
+                  ),
+                  const SizedBox(
+                    height: largeSpacing,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      TextSpan(
-                        text: alreadyHaveAnAccount,
-                        style: Theme.of(context).textTheme.bodyMedium,
+                      Text(
+                        signUp,
+                        style: Theme.of(context).textTheme.titleLarge,
                       ),
-                      const TextSpan(
-                        text: whiteSpace,
+                      const SizedBox(
+                        width: largeSpacing,
                       ),
-                      TextSpan(
-                        text: signIn,
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                              decoration: TextDecoration.underline,
-                            ),
-                        recognizer: TapGestureRecognizer()
-                          ..onTap = () => widget._pageController.animateToPage(
-                                pageOne,
-                                duration: const Duration(
-                                  milliseconds: pageAnimationDurationMillis,
-                                ),
-                                curve: Curves.easeIn,
-                              ),
-                      ),
-                      const TextSpan(
-                        text: whiteSpace,
-                      ),
-                      TextSpan(
-                        text: instead,
-                        style: Theme.of(context).textTheme.bodyMedium,
+                      ElevatedButton(
+                        onPressed: () {
+                          if (_formKey.currentState?.validate() ?? false) {
+                            //.
+                          }
+                        },
+                        child: const Icon(
+                          Icons.arrow_forward,
+                          size: extraLargeSpacing,
+                        ),
                       ),
                     ],
                   ),
-                ),
-                const SizedBox(
-                  height: largeSpacing,
-                ),
-              ],
+                  const SizedBox(
+                    height: extraLargeSpacing,
+                  ),
+                  RichText(
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                          text: alreadyHaveAnAccount,
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                        const TextSpan(
+                          text: whiteSpace,
+                        ),
+                        TextSpan(
+                          text: signIn,
+                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                decoration: TextDecoration.underline,
+                              ),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () => widget._pageController.animateToPage(
+                                  pageOne,
+                                  duration: const Duration(
+                                    milliseconds: pageAnimationDurationMillis,
+                                  ),
+                                  curve: Curves.easeIn,
+                                ),
+                        ),
+                        const TextSpan(
+                          text: whiteSpace,
+                        ),
+                        TextSpan(
+                          text: instead,
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: largeSpacing,
+                  ),
+                ],
+              ),
             ),
           ),
         ),
-      );
+  );
 }

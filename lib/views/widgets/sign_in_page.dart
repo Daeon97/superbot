@@ -44,75 +44,39 @@ class _SignInPageState extends State<SignInPage> {
   }
 
   @override
-  Widget build(BuildContext context) => SingleChildScrollView(
-        child: Form(
-          key: _formKey,
-          child: Padding(
-            padding: const EdgeInsetsDirectional.symmetric(
-              horizontal: spacing,
-            ),
-            child: Column(
-              children: [
-                const SizedBox(
-                  height: largeSpacing,
-                ),
-                Align(
-                  alignment: AlignmentDirectional.topStart,
-                  child: Text(
-                    welcome,
-                    style: Theme.of(context).textTheme.headlineLarge,
+  Widget build(BuildContext context) => Center(
+        child: SingleChildScrollView(
+          child: Form(
+            key: _formKey,
+            child: Padding(
+              padding: const EdgeInsetsDirectional.symmetric(
+                horizontal: spacing,
+              ),
+              child: Column(
+                children: [
+                  const SizedBox(
+                    height: largeSpacing,
                   ),
-                ),
-                const SizedBox(
-                  height: largeSpacing,
-                ),
-                TextFormField(
-                  controller: _emailController,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  keyboardType: TextInputType.emailAddress,
-                  textInputAction: TextInputAction.next,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: email,
-                    prefixIcon: Icon(
-                      Icons.email,
+                  Align(
+                    alignment: AlignmentDirectional.topStart,
+                    child: Text(
+                      welcome,
+                      style: Theme.of(context).textTheme.headlineLarge,
                     ),
                   ),
-                  validator: (value) {
-                    if (value?.isEmpty ?? true) {
-                      return fieldCannotBeEmpty;
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(
-                  height: largeSpacing,
-                ),
-                ValueListenableBuilder<bool>(
-                  valueListenable: _obscurePasswordNotifier,
-                  builder: (_, obscurePassword, __) => TextFormField(
-                    controller: _passwordController,
+                  const SizedBox(
+                    height: largeSpacing,
+                  ),
+                  TextFormField(
+                    controller: _emailController,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
-                    keyboardType: TextInputType.text,
-                    textInputAction: TextInputAction.done,
-                    obscureText: obscurePassword,
-                    decoration: InputDecoration(
-                      border: const OutlineInputBorder(),
-                      labelText: password,
-                      prefixIcon: const Icon(
-                        Icons.password,
-                      ),
-                      suffixIcon: IconButton(
-                        onPressed: () => switch (obscurePassword) {
-                          true => _obscurePasswordNotifier.value = false,
-                          false => _obscurePasswordNotifier.value = true,
-                        },
-                        icon: Icon(
-                          switch (obscurePassword) {
-                            true => Icons.lock,
-                            false => Icons.lock_open,
-                          },
-                        ),
+                    keyboardType: TextInputType.emailAddress,
+                    textInputAction: TextInputAction.next,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: email,
+                      prefixIcon: Icon(
+                        Icons.email,
                       ),
                     ),
                     validator: (value) {
@@ -122,74 +86,114 @@ class _SignInPageState extends State<SignInPage> {
                       return null;
                     },
                   ),
-                ),
-                const SizedBox(
-                  height: largeSpacing,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      signIn,
-                      style: Theme.of(context).textTheme.titleLarge,
-                    ),
-                    const SizedBox(
-                      width: largeSpacing,
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
-                        if (_formKey.currentState?.validate() ?? false) {
-                          //.
+                  const SizedBox(
+                    height: largeSpacing,
+                  ),
+                  ValueListenableBuilder<bool>(
+                    valueListenable: _obscurePasswordNotifier,
+                    builder: (_, obscurePassword, __) => TextFormField(
+                      controller: _passwordController,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      keyboardType: TextInputType.text,
+                      textInputAction: TextInputAction.done,
+                      obscureText: obscurePassword,
+                      decoration: InputDecoration(
+                        border: const OutlineInputBorder(),
+                        labelText: password,
+                        prefixIcon: const Icon(
+                          Icons.password,
+                        ),
+                        suffixIcon: IconButton(
+                          onPressed: () => switch (obscurePassword) {
+                            true => _obscurePasswordNotifier.value = false,
+                            false => _obscurePasswordNotifier.value = true,
+                          },
+                          icon: Icon(
+                            switch (obscurePassword) {
+                              true => Icons.lock,
+                              false => Icons.lock_open,
+                            },
+                          ),
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value?.isEmpty ?? true) {
+                          return fieldCannotBeEmpty;
                         }
+                        return null;
                       },
-                      child: const Icon(
-                        Icons.arrow_forward,
-                        size: extraLargeSpacing,
-                      ),
                     ),
-                  ],
-                ),
-                const SizedBox(
-                  height: extraLargeSpacing,
-                ),
-                RichText(
-                  text: TextSpan(
+                  ),
+                  const SizedBox(
+                    height: largeSpacing,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      TextSpan(
-                        text: dontHaveAnAccount,
-                        style: Theme.of(context).textTheme.bodyMedium,
+                      Text(
+                        signIn,
+                        style: Theme.of(context).textTheme.titleLarge,
                       ),
-                      const TextSpan(
-                        text: whiteSpace,
+                      const SizedBox(
+                        width: largeSpacing,
                       ),
-                      TextSpan(
-                        text: signUp,
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                              decoration: TextDecoration.underline,
-                            ),
-                        recognizer: TapGestureRecognizer()
-                          ..onTap = () => widget._pageController.animateToPage(
-                                pageTwo,
-                                duration: const Duration(
-                                  milliseconds: pageAnimationDurationMillis,
-                                ),
-                                curve: Curves.easeIn,
-                              ),
-                      ),
-                      const TextSpan(
-                        text: whiteSpace,
-                      ),
-                      TextSpan(
-                        text: instead,
-                        style: Theme.of(context).textTheme.bodyMedium,
+                      ElevatedButton(
+                        onPressed: () {
+                          if (_formKey.currentState?.validate() ?? false) {
+                            //.
+                          }
+                        },
+                        child: const Icon(
+                          Icons.arrow_forward,
+                          size: extraLargeSpacing,
+                        ),
                       ),
                     ],
                   ),
-                ),
-                const SizedBox(
-                  height: largeSpacing,
-                ),
-              ],
+                  const SizedBox(
+                    height: extraLargeSpacing,
+                  ),
+                  RichText(
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                          text: dontHaveAnAccount,
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                        const TextSpan(
+                          text: whiteSpace,
+                        ),
+                        TextSpan(
+                          text: signUp,
+                          style:
+                              Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                    decoration: TextDecoration.underline,
+                                  ),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () =>
+                                widget._pageController.animateToPage(
+                                  pageTwo,
+                                  duration: const Duration(
+                                    milliseconds: pageAnimationDurationMillis,
+                                  ),
+                                  curve: Curves.easeIn,
+                                ),
+                        ),
+                        const TextSpan(
+                          text: whiteSpace,
+                        ),
+                        TextSpan(
+                          text: instead,
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: largeSpacing,
+                  ),
+                ],
+              ),
             ),
           ),
         ),
