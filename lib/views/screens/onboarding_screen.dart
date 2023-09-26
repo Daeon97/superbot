@@ -43,17 +43,10 @@ class OnboardingScreen extends StatelessWidget {
                     ),
                     ElevatedButton(
                       onPressed: () {},
-                      child: Text(
-                        iAmAStudent,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: spacing,
-                    ),
-                    ElevatedButton(
-                      onPressed: () {},
-                      child: Text(
-                        iAmASupervisor,
+                      child: const Center(
+                        child: Text(
+                          proceed,
+                        ),
                       ),
                     ),
                     const SizedBox(

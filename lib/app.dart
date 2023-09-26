@@ -7,9 +7,11 @@ import 'package:superbot/cubits/sign_up_cubit/sign_up_cubit.dart';
 import 'package:superbot/injection_container.dart';
 import 'package:superbot/resources/colors.dart';
 import 'package:superbot/resources/strings/routes.dart';
-import 'package:superbot/views/screens/auth_screen.dart';
+import 'package:superbot/views/screens/student_sign_up_screen.dart';
+import 'package:superbot/views/screens/supervisor_sign_up_screen.dart';
 import 'package:superbot/views/screens/chat_screen.dart';
 import 'package:superbot/views/screens/onboarding_screen.dart';
+import 'package:superbot/views/screens/sign_in_screen.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -26,9 +28,11 @@ class App extends StatelessWidget {
             ),
           ),
           routes: {
-            defaultScreenRoute: (_) => const OnboardingScreen(),
+            defaultScreenRoute: (_) => const SignInScreen(),
             onboardingScreenRoute: (_) => const OnboardingScreen(),
-            authScreenRoute: (_) => const AuthScreen(),
+            signInScreenRoute: (_) => const SignInScreen(),
+            supervisorSignUpScreenRoute: (_) => const SupervisorSignUpScreen(),
+            studentSignUpScreenRoute: (_) => const StudentSignUpScreen(),
             chatScreenRoute: (_) => const ChatScreen(),
           },
         ),

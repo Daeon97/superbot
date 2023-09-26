@@ -2,5 +2,7 @@
 
 const defaultScreenRoute = '/';
 const onboardingScreenRoute = '/onboarding';
-const authScreenRoute = '/auth';
+const signInScreenRoute = '/signIn';
+const supervisorSignUpScreenRoute = '/supervisorSignUp';
+const studentSignUpScreenRoute = '/studentSignUp';
 const chatScreenRoute = '/chat';

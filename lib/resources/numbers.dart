@@ -17,3 +17,10 @@ const acceptablePasswordLength = 8;
 
 const degreeTypeDropdownOptionsLength = 2;
 const degreeTypeFirstDropdownItemIndex = 0;
+
+const courseOfStudyDropdownOptionsLength = 3;
+const courseOfStudyFirstDropdownItemIndex = 0;
+const courseOfStudySecondDropdownItemIndex = 1;
+
+const statusDropdownOptionsLength = 2;
+const statusFirstDropdownItemIndex = 0;
