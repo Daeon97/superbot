@@ -1,17 +1,23 @@
 // ignore_for_file: public_member_api_docs
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:superbot/cubits/onboarding_cubit/onboarding_cubit.dart';
 import 'package:superbot/cubits/sign_in_cubit/sign_in_cubit.dart';
-import 'package:superbot/cubits/sign_up_cubit/sign_up_cubit.dart';
 import 'package:superbot/injection_container.dart';
 import 'package:superbot/resources/colors.dart';
 import 'package:superbot/resources/strings/routes.dart';
-import 'package:superbot/views/screens/student_sign_up_screen.dart';
-import 'package:superbot/views/screens/supervisor_sign_up_screen.dart';
+import 'package:superbot/utils/enums.dart' as enums;
+import 'package:superbot/utils/extensions.dart';
 import 'package:superbot/views/screens/chat_screen.dart';
+import 'package:superbot/views/screens/loading_route_screen.dart';
 import 'package:superbot/views/screens/onboarding_screen.dart';
 import 'package:superbot/views/screens/sign_in_screen.dart';
+import 'package:superbot/views/screens/student_home_screen.dart';
+import 'package:superbot/views/screens/student_sign_up_screen.dart';
+import 'package:superbot/views/screens/supervisor_home_screen.dart';
+import 'package:superbot/views/screens/supervisor_sign_up_screen.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -27,23 +33,46 @@ class App extends StatelessWidget {
               // brightness: Brightness.dark,
             ),
           ),
-          routes: {
-            defaultScreenRoute: (_) => const SignInScreen(),
-            onboardingScreenRoute: (_) => const OnboardingScreen(),
-            signInScreenRoute: (_) => const SignInScreen(),
-            supervisorSignUpScreenRoute: (_) => const SupervisorSignUpScreen(),
-            studentSignUpScreenRoute: (_) => const StudentSignUpScreen(),
-            chatScreenRoute: (_) => const ChatScreen(),
-          },
+          routes: _routes,
         ),
       );
 
   List<BlocProvider> get _providers => [
+        BlocProvider<OnboardingCubit>(
+          create: (_) => sl(),
+        ),
         BlocProvider<SignInCubit>(
           create: (_) => sl(),
         ),
-        BlocProvider<SignUpCubit>(
-          create: (_) => sl(),
-        ),
       ];
+
+  Map<String, WidgetBuilder> get _routes => {
+        defaultScreenRoute: (context) =>
+            switch (context.read<OnboardingCubit>().state.show) {
+              false when sl<FirebaseAuth>().currentUser == null =>
+                const SignInScreen(),
+              false when sl<FirebaseAuth>().currentUser != null =>
+                FutureBuilder(
+                  future: sl<FirebaseAuth>().currentUser!.type,
+                  builder: (_, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done &&
+                        snapshot.hasData) {
+                      return switch (snapshot.data!) {
+                        enums.Type.supervisor => const SupervisorHomeScreen(),
+                        enums.Type.student => const StudentHomeScreen(),
+                      };
+                    }
+                    return const LoadingRouteScreen();
+                  },
+                ),
+              _ => const OnboardingScreen(),
+            },
+        onboardingScreenRoute: (_) => const OnboardingScreen(),
+        signInScreenRoute: (_) => const SignInScreen(),
+        supervisorSignUpScreenRoute: (_) => const SupervisorSignUpScreen(),
+        supervisorHomeScreenRoute: (_) => const SupervisorHomeScreen(),
+        studentSignUpScreenRoute: (_) => const StudentSignUpScreen(),
+        studentHomeScreenRoute: (_) => const StudentHomeScreen(),
+        chatScreenRoute: (_) => const ChatScreen(),
+      };
 }

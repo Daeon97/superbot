@@ -17,14 +17,28 @@ class SupervisorSignUpScreen extends StatefulWidget {
 class _SupervisorSignUpScreenState extends State<SupervisorSignUpScreen> {
   late final GlobalKey<FormState> _formKey;
   late final TextEditingController _nameController;
+  late final TextEditingController _emailController;
   late final ValueNotifier<String?> _statusNotifier;
+  late final TextEditingController _passwordController;
+  late final TextEditingController _confirmPasswordController;
+  late final ValueNotifier<bool> _obscurePasswordNotifier;
+  late final ValueNotifier<bool> _obscureConfirmPasswordNotifier;
 
   @override
   void initState() {
     _formKey = GlobalKey<FormState>();
     _nameController = TextEditingController();
+    _emailController = TextEditingController();
     _statusNotifier = ValueNotifier<String?>(
       null,
+    );
+    _passwordController = TextEditingController();
+    _confirmPasswordController = TextEditingController();
+    _obscurePasswordNotifier = ValueNotifier<bool>(
+      true,
+    );
+    _obscureConfirmPasswordNotifier = ValueNotifier<bool>(
+      true,
     );
     super.initState();
   }
@@ -32,7 +46,12 @@ class _SupervisorSignUpScreenState extends State<SupervisorSignUpScreen> {
   @override
   void dispose() {
     _nameController.dispose();
+    _emailController.dispose();
     _statusNotifier.dispose();
+    _passwordController.dispose();
+    _confirmPasswordController.dispose();
+    _obscurePasswordNotifier.dispose();
+    _obscureConfirmPasswordNotifier.dispose();
     super.dispose();
   }
 
@@ -91,6 +110,28 @@ class _SupervisorSignUpScreenState extends State<SupervisorSignUpScreen> {
                         const SizedBox(
                           height: largeSpacing,
                         ),
+                        TextFormField(
+                          controller: _emailController,
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          keyboardType: TextInputType.emailAddress,
+                          textInputAction: TextInputAction.done,
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: email,
+                            prefixIcon: Icon(
+                              Icons.email,
+                            ),
+                          ),
+                          validator: (value) {
+                            if (value?.isEmpty ?? true) {
+                              return fieldCannotBeEmpty;
+                            }
+                            return null;
+                          },
+                        ),
+                        const SizedBox(
+                          height: largeSpacing,
+                        ),
                         ValueListenableBuilder<String?>(
                           valueListenable: _statusNotifier,
                           builder: (_, statusNotifierValue, __) =>
@@ -124,6 +165,105 @@ class _SupervisorSignUpScreenState extends State<SupervisorSignUpScreen> {
                             validator: (value) {
                               if (value?.isEmpty ?? true) {
                                 return fieldCannotBeEmpty;
+                              }
+                              return null;
+                            },
+                          ),
+                        ),
+                        const SizedBox(
+                          height: largeSpacing,
+                        ),
+                        ValueListenableBuilder<bool>(
+                          valueListenable: _obscurePasswordNotifier,
+                          builder: (_, obscurePassword, __) => TextFormField(
+                            controller: _passwordController,
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
+                            keyboardType: TextInputType.text,
+                            textInputAction: TextInputAction.done,
+                            obscureText: obscurePassword,
+                            decoration: InputDecoration(
+                              border: const OutlineInputBorder(),
+                              labelText: password,
+                              prefixIcon: const Icon(
+                                Icons.password,
+                              ),
+                              suffixIcon: IconButton(
+                                onPressed: () => switch (obscurePassword) {
+                                  true => _obscurePasswordNotifier.value =
+                                      false,
+                                  false => _obscurePasswordNotifier.value =
+                                      true,
+                                },
+                                icon: Icon(
+                                  switch (obscurePassword) {
+                                    true => Icons.lock,
+                                    false => Icons.lock_open,
+                                  },
+                                ),
+                              ),
+                            ),
+                            validator: (value) {
+                              if (value?.isEmpty ?? true) {
+                                return fieldCannotBeEmpty;
+                              } else if (value!.isNotEmpty) {
+                                if (value != _confirmPasswordController.text) {
+                                  return passwordMismatch;
+                                } else if (value.length <
+                                    acceptablePasswordLength) {
+                                  return passwordTooShort;
+                                }
+
+                                return null;
+                              }
+                              return null;
+                            },
+                          ),
+                        ),
+                        const SizedBox(
+                          height: largeSpacing,
+                        ),
+                        ValueListenableBuilder<bool>(
+                          valueListenable: _obscureConfirmPasswordNotifier,
+                          builder: (_, obscureConfirmPassword, __) =>
+                              TextFormField(
+                            controller: _confirmPasswordController,
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
+                            keyboardType: TextInputType.text,
+                            textInputAction: TextInputAction.done,
+                            obscureText: obscureConfirmPassword,
+                            decoration: InputDecoration(
+                              border: const OutlineInputBorder(),
+                              labelText: confirmPassword,
+                              prefixIcon: const Icon(
+                                Icons.password,
+                              ),
+                              suffixIcon: IconButton(
+                                onPressed: () =>
+                                    switch (obscureConfirmPassword) {
+                                  true => _obscureConfirmPasswordNotifier
+                                      .value = false,
+                                  false => _obscureConfirmPasswordNotifier
+                                      .value = true,
+                                },
+                                icon: Icon(
+                                  switch (obscureConfirmPassword) {
+                                    true => Icons.lock,
+                                    false => Icons.lock_open,
+                                  },
+                                ),
+                              ),
+                            ),
+                            validator: (value) {
+                              if (value?.isEmpty ?? true) {
+                                return fieldCannotBeEmpty;
+                              } else if (value!.isNotEmpty) {
+                                if (value != _passwordController.text) {
+                                  return passwordMismatch;
+                                }
+
+                                return null;
                               }
                               return null;
                             },

@@ -29,3 +29,5 @@ const proceed = 'Proceed';
 const computerScience = 'Computer Science';
 const massCommunication = 'Mass Communication';
 const economics = 'Economics';
+const couldNotGetUserType =
+    'Could not get user type. The field may either be empty or nonexistent';

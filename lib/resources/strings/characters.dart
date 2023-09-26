@@ -2,3 +2,4 @@
 
 const whiteSpace = ' ';
 const tabSpace = '  ';
+const forwardSlash = '/';

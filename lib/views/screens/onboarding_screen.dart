@@ -1,8 +1,11 @@
 // ignore_for_file: public_member_api_docs
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:superbot/cubits/onboarding_cubit/onboarding_cubit.dart';
 import 'package:superbot/resources/numbers.dart';
 import 'package:superbot/resources/strings/assets_paths.dart';
+import 'package:superbot/resources/strings/routes.dart';
 import 'package:superbot/resources/strings/ui.dart';
 
 class OnboardingScreen extends StatelessWidget {
@@ -42,7 +45,12 @@ class OnboardingScreen extends StatelessWidget {
                       height: largeSpacing,
                     ),
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        context.read<OnboardingCubit>().show = false;
+                        Navigator.of(context).pushReplacementNamed(
+                          signInScreenRoute,
+                        );
+                      },
                       child: const Center(
                         child: Text(
                           proceed,
