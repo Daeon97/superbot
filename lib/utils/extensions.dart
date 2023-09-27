@@ -27,3 +27,7 @@ extension UserType on User {
     };
   }
 }
+
+// extension UserData on enums.Type {
+//
+// }

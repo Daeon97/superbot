@@ -24,12 +24,14 @@ dependencies:
   firebase_dynamic_links: ^5.3.6
   dartz: ^0.10.1
   firebase_analytics: ^10.5.0
+  json_annotation: ^4.8.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   very_good_analysis: ^5.1.0
   build_runner: ^2.4.6
+  json_serializable: ^6.7.1
 
 flutter:
   uses-material-design: true

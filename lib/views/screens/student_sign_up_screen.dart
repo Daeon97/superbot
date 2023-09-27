@@ -11,12 +11,7 @@ import 'package:superbot/resources/strings/routes.dart';
 import 'package:superbot/resources/strings/ui.dart';
 
 class StudentSignUpScreen extends StatefulWidget {
-  const StudentSignUpScreen({
-    this.deepLinkData,
-    super.key,
-  });
-
-  final Map<String, String>? deepLinkData;
+  const StudentSignUpScreen({super.key});
 
   @override
   State<StudentSignUpScreen> createState() => _StudentSignUpScreenState();
@@ -313,26 +308,29 @@ class _StudentSignUpScreenState extends State<StudentSignUpScreen> {
                           const SizedBox(
                             height: largeSpacing,
                           ),
-                          TextFormField(
-                            controller: _supervisorInviteLinkController,
-                            autovalidateMode:
-                                AutovalidateMode.onUserInteraction,
-                            keyboardType: TextInputType.text,
-                            textInputAction: TextInputAction.next,
-                            enabled: false,
-                            decoration: const InputDecoration(
-                              border: OutlineInputBorder(),
-                              labelText: supervisorInviteLink,
-                              prefixIcon: Icon(
-                                Icons.link,
+                          BlocBuilder<StudentSignUpCubit, StudentSignUpState>(
+                            builder: (_, studentSignUpState) => TextFormField(
+                              controller: _supervisorInviteLinkController,
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                              keyboardType: TextInputType.text,
+                              textInputAction: TextInputAction.next,
+                              enabled:
+                                  studentSignUpState is! SigningUpStudentState,
+                              decoration: const InputDecoration(
+                                border: OutlineInputBorder(),
+                                labelText: supervisorInviteLink,
+                                prefixIcon: Icon(
+                                  Icons.link,
+                                ),
                               ),
+                              validator: (value) {
+                                if (value?.isEmpty ?? true) {
+                                  return fieldCannotBeEmpty;
+                                }
+                                return null;
+                              },
                             ),
-                            validator: (value) {
-                              if (value?.isEmpty ?? true) {
-                                return fieldCannotBeEmpty;
-                              }
-                              return null;
-                            },
                           ),
                           const SizedBox(
                             height: largeSpacing,

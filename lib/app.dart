@@ -3,6 +3,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:superbot/cubits/copy_link_cubit/copy_link_cubit.dart';
 import 'package:superbot/cubits/onboarding_cubit/onboarding_cubit.dart';
 import 'package:superbot/cubits/sign_in_cubit/sign_in_cubit.dart';
 import 'package:superbot/cubits/student_sign_up_cubit/student_sign_up_cubit.dart';
@@ -22,12 +23,7 @@ import 'package:superbot/views/screens/supervisor_home_screen.dart';
 import 'package:superbot/views/screens/supervisor_sign_up_screen.dart';
 
 class App extends StatelessWidget {
-  const App({
-    this.deepLinkData,
-    super.key,
-  });
-
-  final Map<String, String>? deepLinkData;
+  const App({super.key});
 
   @override
   Widget build(BuildContext context) => MultiBlocProvider(
@@ -57,34 +53,35 @@ class App extends StatelessWidget {
         BlocProvider<SupervisorSignUpCubit>(
           create: (_) => sl(),
         ),
+        BlocProvider<CopyLinkCubit>(
+          create: (_) => sl(),
+        ),
       ];
 
   Map<String, WidgetBuilder> get _routes => {
-        defaultScreenRoute: (context) =>
-            switch (context.read<OnboardingCubit>().state.show) {
-              false when sl<FirebaseAuth>().currentUser == null =>
-                const SignInScreen(),
-              false when sl<FirebaseAuth>().currentUser != null =>
-                FutureBuilder(
-                  future: sl<FirebaseAuth>().currentUser!.type,
-                  builder: (_, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.done &&
-                        snapshot.hasData) {
-                      return switch (snapshot.data!) {
-                        enums.Type.student => const StudentHomeScreen(),
-                        enums.Type.supervisor => const SupervisorHomeScreen(),
-                      };
-                    }
-                    return const LoadingRouteScreen();
-                  },
-                ),
-              _ => const OnboardingScreen(),
-            },
+        defaultScreenRoute: (context) => StudentSignUpScreen(),
+        // switch (context.read<OnboardingCubit>().state.show) {
+        //   false when sl<FirebaseAuth>().currentUser == null =>
+        //     const SignInScreen(),
+        //   false when sl<FirebaseAuth>().currentUser != null =>
+        //     FutureBuilder(
+        //       future: sl<FirebaseAuth>().currentUser!.type,
+        //       builder: (_, snapshot) {
+        //         if (snapshot.connectionState == ConnectionState.done &&
+        //             snapshot.hasData) {
+        //           return switch (snapshot.data!) {
+        //             enums.Type.student => const StudentHomeScreen(),
+        //             enums.Type.supervisor => const SupervisorHomeScreen(),
+        //           };
+        //         }
+        //         return const LoadingRouteScreen();
+        //       },
+        //     ),
+        //   _ => const OnboardingScreen(),
+        // },
         onboardingScreenRoute: (_) => const OnboardingScreen(),
         signInScreenRoute: (_) => const SignInScreen(),
-        studentSignUpScreenRoute: (_) => StudentSignUpScreen(
-              deepLinkData: deepLinkData,
-            ),
+        studentSignUpScreenRoute: (_) => const StudentSignUpScreen(),
         studentHomeScreenRoute: (_) => const StudentHomeScreen(),
         supervisorSignUpScreenRoute: (_) => const SupervisorSignUpScreen(),
         supervisorHomeScreenRoute: (_) => const SupervisorHomeScreen(),

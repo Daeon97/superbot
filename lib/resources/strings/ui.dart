@@ -35,3 +35,9 @@ const couldNotResolveUserType =
     'Could not resolve user type. The field may either be empty or nonexistent';
 const anErrorOccurred = 'An error occurred. Please try again later';
 const supervisorInviteLink = 'Supervisor invite link';
+const students = 'Students';
+const shareLink = 'Share link';
+const copyYourLink = 'Copy your link to share with your students';
+const copyLink = 'Copy Link';
+const cancel = 'Cancel';
+const copiedToClipboard = 'Copied to clipboard';
