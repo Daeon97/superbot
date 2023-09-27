@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:superbot/cubits/onboarding_cubit/onboarding_cubit.dart';
 import 'package:superbot/cubits/sign_in_cubit/sign_in_cubit.dart';
+import 'package:superbot/cubits/student_sign_up_cubit/student_sign_up_cubit.dart';
+import 'package:superbot/cubits/supervisor_sign_up_cubit/supervisor_sign_up_cubit.dart';
 import 'package:superbot/injection_container.dart';
 import 'package:superbot/resources/colors.dart';
 import 'package:superbot/resources/strings/routes.dart';
@@ -20,7 +22,12 @@ import 'package:superbot/views/screens/supervisor_home_screen.dart';
 import 'package:superbot/views/screens/supervisor_sign_up_screen.dart';
 
 class App extends StatelessWidget {
-  const App({super.key});
+  const App({
+    this.deepLinkData,
+    super.key,
+  });
+
+  final Map<String, String>? deepLinkData;
 
   @override
   Widget build(BuildContext context) => MultiBlocProvider(
@@ -44,6 +51,12 @@ class App extends StatelessWidget {
         BlocProvider<SignInCubit>(
           create: (_) => sl(),
         ),
+        BlocProvider<StudentSignUpCubit>(
+          create: (_) => sl(),
+        ),
+        BlocProvider<SupervisorSignUpCubit>(
+          create: (_) => sl(),
+        ),
       ];
 
   Map<String, WidgetBuilder> get _routes => {
@@ -58,8 +71,8 @@ class App extends StatelessWidget {
                     if (snapshot.connectionState == ConnectionState.done &&
                         snapshot.hasData) {
                       return switch (snapshot.data!) {
-                        enums.Type.supervisor => const SupervisorHomeScreen(),
                         enums.Type.student => const StudentHomeScreen(),
+                        enums.Type.supervisor => const SupervisorHomeScreen(),
                       };
                     }
                     return const LoadingRouteScreen();
@@ -69,10 +82,12 @@ class App extends StatelessWidget {
             },
         onboardingScreenRoute: (_) => const OnboardingScreen(),
         signInScreenRoute: (_) => const SignInScreen(),
+        studentSignUpScreenRoute: (_) => StudentSignUpScreen(
+              deepLinkData: deepLinkData,
+            ),
+        studentHomeScreenRoute: (_) => const StudentHomeScreen(),
         supervisorSignUpScreenRoute: (_) => const SupervisorSignUpScreen(),
         supervisorHomeScreenRoute: (_) => const SupervisorHomeScreen(),
-        studentSignUpScreenRoute: (_) => const StudentSignUpScreen(),
-        studentHomeScreenRoute: (_) => const StudentHomeScreen(),
         chatScreenRoute: (_) => const ChatScreen(),
       };
 }

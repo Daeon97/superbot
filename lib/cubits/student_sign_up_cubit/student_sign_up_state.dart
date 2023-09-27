@@ -28,8 +28,14 @@ final class StudentSignUpSuccessState extends StudentSignUpState {
 }
 
 final class StudentSignUpFailureState extends StudentSignUpState {
-  const StudentSignUpFailureState();
+  const StudentSignUpFailureState(
+    this.failure,
+  );
+
+  final Failure failure;
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [
+        failure,
+      ];
 }

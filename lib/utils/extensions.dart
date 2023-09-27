@@ -22,7 +22,7 @@ extension UserType on User {
       supervisorValue => enums.Type.supervisor,
       studentValue => enums.Type.student,
       _ => throw Exception(
-          couldNotGetUserType,
+          couldNotResolveUserType,
         ),
     };
   }

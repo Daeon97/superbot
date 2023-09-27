@@ -6,19 +6,31 @@ import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:get_it/get_it.dart';
 import 'package:superbot/cubits/onboarding_cubit/onboarding_cubit.dart';
 import 'package:superbot/cubits/sign_in_cubit/sign_in_cubit.dart';
+import 'package:superbot/cubits/student_sign_up_cubit/student_sign_up_cubit.dart';
+import 'package:superbot/cubits/supervisor_sign_up_cubit/supervisor_sign_up_cubit.dart';
 import 'package:superbot/repositories/auth_repository.dart';
-import 'package:superbot/services/dynamic_link_service.dart';
+import 'package:superbot/services/link_generator_service.dart';
 
 final sl = GetIt.I;
 
 void registerServices() {
   sl
     // Cubits
-    ..registerFactory(
+    ..registerFactory<OnboardingCubit>(
       OnboardingCubit.new,
     )
     ..registerFactory<SignInCubit>(
       () => SignInCubit(
+        sl(),
+      ),
+    )
+    ..registerFactory<StudentSignUpCubit>(
+      () => StudentSignUpCubit(
+        sl(),
+      ),
+    )
+    ..registerFactory<SupervisorSignUpCubit>(
+      () => SupervisorSignUpCubit(
         sl(),
       ),
     )
@@ -28,12 +40,13 @@ void registerServices() {
       () => AuthRepositoryImplementation(
         firebaseAuth: sl(),
         firebaseFirestore: sl(),
+        linkGeneratorService: sl(),
       ),
     )
 
     // Services
-    ..registerLazySingleton<DynamicLinkService>(
-      DynamicLinkServiceImplementation.new,
+    ..registerLazySingleton<LinkGeneratorService>(
+      DynamicLinkService.new,
     )
 
     // External

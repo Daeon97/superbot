@@ -12,3 +12,36 @@ final class SignInInitialState extends SignInState {
   @override
   List<Object?> get props => [];
 }
+
+final class SigningInState extends SignInState {
+  const SigningInState();
+
+  @override
+  List<Object?> get props => [];
+}
+
+final class SignInSuccessState extends SignInState {
+  const SignInSuccessState(
+    this.route,
+  );
+
+  final String route;
+
+  @override
+  List<Object?> get props => [
+        route,
+      ];
+}
+
+final class SignInFailureState extends SignInState {
+  const SignInFailureState(
+    this.failure,
+  );
+
+  final Failure failure;
+
+  @override
+  List<Object?> get props => [
+        failure,
+      ];
+}

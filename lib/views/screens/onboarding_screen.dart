@@ -3,8 +3,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:superbot/cubits/onboarding_cubit/onboarding_cubit.dart';
+import 'package:superbot/resources/colors.dart';
 import 'package:superbot/resources/numbers.dart';
 import 'package:superbot/resources/strings/assets_paths.dart';
+import 'package:superbot/resources/strings/characters.dart';
 import 'package:superbot/resources/strings/routes.dart';
 import 'package:superbot/resources/strings/ui.dart';
 
@@ -28,10 +30,28 @@ class OnboardingScreen extends StatelessWidget {
                     Image.asset(
                       welcomeIllustrationPath,
                     ),
-                    Text(
-                      introHead,
+                    RichText(
                       textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.headlineLarge,
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                            text: introHead,
+                            style: Theme.of(context).textTheme.headlineLarge,
+                          ),
+                          const TextSpan(
+                            text: tabSpace,
+                          ),
+                          TextSpan(
+                            text: appName,
+                            style: Theme.of(context)
+                                .textTheme
+                                .headlineLarge
+                                ?.copyWith(
+                                  color: baseColor,
+                                ),
+                          ),
+                        ],
+                      ),
                     ),
                     const SizedBox(
                       height: smallSpacing,
@@ -44,16 +64,45 @@ class OnboardingScreen extends StatelessWidget {
                     const SizedBox(
                       height: largeSpacing,
                     ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height /
+                          onboardingSpacerDivider,
+                    ),
                     ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor: const MaterialStatePropertyAll<Color>(
+                          baseColor,
+                        ),
+                        shape: MaterialStatePropertyAll<OutlinedBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadiusDirectional.circular(
+                              buttonBorderRadius,
+                            ),
+                          ),
+                        ),
+                        padding:
+                            const MaterialStatePropertyAll<EdgeInsetsGeometry>(
+                          EdgeInsetsDirectional.symmetric(
+                            vertical: spacing,
+                          ),
+                        ),
+                      ),
                       onPressed: () {
                         context.read<OnboardingCubit>().show = false;
                         Navigator.of(context).pushReplacementNamed(
                           signInScreenRoute,
                         );
                       },
-                      child: const Center(
+                      child: Center(
                         child: Text(
-                          proceed,
+                          getStarted,
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium
+                              ?.copyWith(
+                                color:
+                                    Theme.of(context).scaffoldBackgroundColor,
+                              ),
                         ),
                       ),
                     ),

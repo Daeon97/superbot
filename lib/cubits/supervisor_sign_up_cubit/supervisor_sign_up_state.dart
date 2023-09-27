@@ -28,8 +28,14 @@ final class SupervisorSignUpSuccessState extends SupervisorSignUpState {
 }
 
 final class SupervisorSignUpFailureState extends SupervisorSignUpState {
-  const SupervisorSignUpFailureState();
+  const SupervisorSignUpFailureState(
+    this.failure,
+  );
+
+  final Failure failure;
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [
+        failure,
+      ];
 }

@@ -2,13 +2,15 @@
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:superbot/app.dart';
 import 'package:superbot/firebase_options.dart';
 import 'package:superbot/injection_container.dart';
+import 'package:superbot/resources/numbers.dart';
+import 'package:superbot/resources/strings/characters.dart';
+import 'package:superbot/resources/strings/local.dart';
 
 void main() => _init().then(
       (_) => _handleDynamicLinks().then(
@@ -24,8 +26,6 @@ Future<void> _init() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  // await dotenv.load();
-
   HydratedBloc.storage = await HydratedStorage.build(
     storageDirectory: await getTemporaryDirectory(),
   );
@@ -33,24 +33,18 @@ Future<void> _init() async {
   registerServices();
 }
 
-Future<void> _handleDynamicLinks() async {
+Future<Map<String, String>?> _handleDynamicLinks() async {
+  Map<String, String>? deepLink;
+
   final initialLink = await sl<FirebaseDynamicLinks>().getInitialLink();
 
   if (initialLink != null) {
-    if (kDebugMode) {
-      print('if block initial link is ${initialLink.link}');
-    }
+    final linkSegments = initialLink.link.pathSegments;
+    deepLink = {
+      supervisorId: linkSegments[zero],
+      route: forwardSlash + linkSegments[one],
+    };
   }
 
-  if (kDebugMode) {
-    print('under if block initial link is ${initialLink?.link}');
-  }
-
-  sl<FirebaseDynamicLinks>().onLink.listen(
-    (dynamicLinkData) {
-      if (kDebugMode) {
-        print('dynamic link data is ${dynamicLinkData.link}');
-      }
-    },
-  );
+  return deepLink;
 }

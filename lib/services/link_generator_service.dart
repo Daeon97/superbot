@@ -1,26 +1,29 @@
-// ignore_for_file: public_member_api_docs, one_member_abstracts
+// ignore_for_file: public_member_api_docs
+
+import 'dart:async';
 
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
-import 'package:flutter/foundation.dart';
 import 'package:superbot/injection_container.dart';
 import 'package:superbot/resources/strings/characters.dart';
 import 'package:superbot/resources/strings/networking.dart';
 import 'package:superbot/resources/strings/routes.dart';
 
-abstract interface class DynamicLinkService {
+abstract interface class LinkGeneratorService {
   Future<Uri> buildlink(
     String uid,
   );
+
+  Stream<PendingDynamicLinkData> get link;
 }
 
-final class DynamicLinkServiceImplementation implements DynamicLinkService {
+final class DynamicLinkService implements LinkGeneratorService {
   @override
   Future<Uri> buildlink(
     String uid,
-  ) async {
+  ) {
     final dynamicLinkParams = DynamicLinkParameters(
       link: Uri.parse(
-        dynamicLinkLink + uid + studentSignUpScreenRoute + forwardSlash,
+        dynamicLinkLink + uid + studentSignUpScreenRoute,
       ),
       uriPrefix: dynamicLinkUriPrefix,
       androidParameters: const AndroidParameters(
@@ -28,14 +31,11 @@ final class DynamicLinkServiceImplementation implements DynamicLinkService {
       ),
     );
 
-    final dynamicLink = await sl<FirebaseDynamicLinks>().buildLink(
+    return sl<FirebaseDynamicLinks>().buildLink(
       dynamicLinkParams,
     );
-
-    if (kDebugMode) {
-      print('built dynamic link is $dynamicLink');
-    }
-
-    return dynamicLink;
   }
+
+  @override
+  Stream<PendingDynamicLinkData> get link => sl<FirebaseDynamicLinks>().onLink;
 }

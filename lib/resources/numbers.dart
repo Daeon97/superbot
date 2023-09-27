@@ -24,3 +24,12 @@ const courseOfStudySecondDropdownItemIndex = 1;
 
 const statusDropdownOptionsLength = 2;
 const statusFirstDropdownItemIndex = 0;
+
+const buttonBorderRadius = 10.0;
+
+const onboardingSpacerDivider = 4;
+
+const circularProgressInButtonWidthAndHeight = 20.0;
+
+const zero = 0;
+const one = 1;

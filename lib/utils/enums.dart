@@ -13,6 +13,6 @@ enum Option {
 }
 
 enum Type {
-  supervisor,
   student,
+  supervisor,
 }
