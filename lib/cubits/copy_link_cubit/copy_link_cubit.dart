@@ -2,26 +2,25 @@
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:superbot/models/failure.dart';
 import 'package:superbot/repositories/auth_repository.dart';
-import 'package:superbot/repositories/clipboard_repository.dart';
 import 'package:superbot/repositories/database_ops_repository.dart';
+import 'package:superbot/repositories/link_ops_repository.dart';
 
 part 'copy_link_state.dart';
 
 class CopyLinkCubit extends Cubit<CopyLinkState> {
   CopyLinkCubit({
-    required ClipboardRepository clipboardRepository,
+    required LinkOpsRepository linkOpsRepository,
     required AuthRepository authRepository,
     required DatabaseOpsRepository databaseOpsRepository,
-  })  : _clipboardRepository = clipboardRepository,
+  })  : _linkOpsRepository = linkOpsRepository,
         _authRepository = authRepository,
         _databaseOpsRepository = databaseOpsRepository,
         super(
           const CopyLinkInitialState(),
         );
 
-  final ClipboardRepository _clipboardRepository;
+  final LinkOpsRepository _linkOpsRepository;
   final AuthRepository _authRepository;
   final DatabaseOpsRepository _databaseOpsRepository;
 

@@ -53,7 +53,7 @@ final class SignInCubit extends Cubit<SignInState> {
       emit(
         SignInSuccessState(
           switch (type) {
-            enums.Type.student => studentHomeScreenRoute,
+            enums.Type.student => studentChatScreenRoute,
             enums.Type.supervisor => supervisorHomeScreenRoute,
           },
         ),

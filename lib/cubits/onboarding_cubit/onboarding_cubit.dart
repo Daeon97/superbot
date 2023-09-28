@@ -2,7 +2,7 @@
 
 import 'package:equatable/equatable.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
-import 'package:superbot/resources/strings/networking.dart';
+import 'package:superbot/resources/strings/local.dart';
 
 part 'onboarding_state.dart';
 

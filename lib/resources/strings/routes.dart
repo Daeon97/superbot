@@ -6,5 +6,5 @@ const signInScreenRoute = '/signIn';
 const supervisorSignUpScreenRoute = '/supervisorSignUp';
 const supervisorHomeScreenRoute = '/supervisorHome';
 const studentSignUpScreenRoute = '/studentSignUp';
-const studentHomeScreenRoute = '/studentHome';
-const chatScreenRoute = '/chat';
+const studentChatScreenRoute = '/studentChat';
+const supervisorChatScreenRoute = '/supervisorChat';

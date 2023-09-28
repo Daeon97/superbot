@@ -16,3 +16,9 @@ enum Type {
   student,
   supervisor,
 }
+
+enum MessageDeliveryStatus {
+  sending,
+  failed,
+  sent,
+}

@@ -4,23 +4,24 @@ import 'dart:async';
 
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:superbot/injection_container.dart';
+import 'package:superbot/resources/numbers.dart';
 import 'package:superbot/resources/strings/networking.dart';
 import 'package:superbot/resources/strings/routes.dart';
 
 abstract interface class LinkGeneratorService {
-  Future<Uri> buildlink(
+  Future<String> buildLink(
     String uid,
   );
 }
 
 final class DynamicLinkService implements LinkGeneratorService {
   @override
-  Future<Uri> buildlink(
+  Future<String> buildLink(
     String uid,
-  ) {
+  ) async {
     final dynamicLinkParams = DynamicLinkParameters(
       link: Uri.parse(
-        dynamicLinkLink + uid + studentSignUpScreenRoute,
+        dynamicLinkLink + uid,
       ),
       uriPrefix: dynamicLinkUriPrefix,
       androidParameters: const AndroidParameters(
@@ -28,8 +29,10 @@ final class DynamicLinkService implements LinkGeneratorService {
       ),
     );
 
-    return sl<FirebaseDynamicLinks>().buildLink(
+    final link = await sl<FirebaseDynamicLinks>().buildLink(
       dynamicLinkParams,
     );
+
+    return link.queryParameters[linkParamName]!;
   }
 }

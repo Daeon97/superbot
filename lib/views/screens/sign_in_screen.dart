@@ -222,6 +222,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         ),
                         BlocBuilder<SignInCubit, SignInState>(
                           builder: (_, signInState) => RichText(
+                            textAlign: TextAlign.center,
                             text: TextSpan(
                               children: [
                                 TextSpan(
@@ -232,7 +233,33 @@ class _SignInScreenState extends State<SignInScreen> {
                                   text: whiteSpace,
                                 ),
                                 TextSpan(
-                                  text: signUpInstead,
+                                  text: signUpAsAStudent,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium
+                                      ?.copyWith(
+                                        color: baseColor,
+                                      ),
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = signInState is! SigningInState
+                                        ? () => Navigator.of(context)
+                                                .pushReplacementNamed(
+                                              studentSignUpScreenRoute,
+                                            )
+                                        : null,
+                                ),
+                                const TextSpan(
+                                  text: whiteSpace,
+                                ),
+                                TextSpan(
+                                  text: or,
+                                  style: Theme.of(context).textTheme.bodyMedium,
+                                ),
+                                const TextSpan(
+                                  text: whiteSpace,
+                                ),
+                                TextSpan(
+                                  text: signUpAsASupervisor,
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodyMedium

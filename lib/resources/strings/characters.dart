@@ -3,3 +3,5 @@
 const whiteSpace = ' ';
 const tabSpace = '  ';
 const forwardSlash = '/';
+const comma = ',';
+const fullStop = '.';

@@ -33,3 +33,7 @@ const circularProgressInButtonWidthAndHeight = 20.0;
 
 const zero = 0;
 const one = 1;
+
+const requestConnectTimeoutSeconds = 50;
+const requestReceiveTimeoutSeconds = 50;
+const requestSendTimeoutSeconds = 50;

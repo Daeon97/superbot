@@ -2,8 +2,8 @@
 
 import 'package:flutter/material.dart';
 
-class ChatScreen extends StatelessWidget {
-  const ChatScreen({super.key});
+class SupervisorChatScreen extends StatelessWidget {
+  const SupervisorChatScreen({super.key});
 
   @override
   Widget build(BuildContext context) => Scaffold();
