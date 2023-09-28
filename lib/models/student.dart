@@ -11,12 +11,10 @@ Timestamp _createdAtFromJson(
 ) =>
     createdAt;
 
-Map<String, dynamic> _createdAtToJson(
+Timestamp _createdAtToJson(
   Timestamp createdAt,
 ) =>
-    {
-      createdAtField: createdAt,
-    };
+    createdAt;
 
 @JsonSerializable()
 final class Student {

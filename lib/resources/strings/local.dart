@@ -6,3 +6,5 @@ const chatPath = 'CHAT_PATH';
 
 const chatBaseUrlInstanceName = 'chatBaseUrl';
 const forChatsInstanceName = 'forChats';
+
+const dateFormatPattern = 'HH:mm dd/MM/yyyy';

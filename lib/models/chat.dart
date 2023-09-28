@@ -12,12 +12,10 @@ Timestamp _sentAtFromJson(
 ) =>
     createdAt;
 
-Map<String, dynamic> _sentAtToJson(
+Timestamp _sentAtToJson(
   Timestamp createdAt,
 ) =>
-    {
-      sentAtField: createdAt,
-    };
+    createdAt;
 
 @JsonSerializable()
 final class Chat {

@@ -25,7 +25,7 @@ class CopyLinkCubit extends Cubit<CopyLinkState> {
   final DatabaseOpsRepository _databaseOpsRepository;
 
   // ignore: avoid_setters_without_getters
-  Future<void> copySupervisorInviteLinkToClipboard() async {
+  Future<void> copyInviteLinkToClipboard() async {
     emit(
       const CopyingLinkState(),
     );

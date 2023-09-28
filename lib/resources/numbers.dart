@@ -34,6 +34,10 @@ const circularProgressInButtonWidthAndHeight = 20.0;
 const zero = 0;
 const one = 1;
 
+const four = 4;
+
 const requestConnectTimeoutSeconds = 50;
 const requestReceiveTimeoutSeconds = 50;
 const requestSendTimeoutSeconds = 50;
+
+const chatBorderRadius = 12.0;

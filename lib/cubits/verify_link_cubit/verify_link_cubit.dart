@@ -24,8 +24,6 @@ class VerifyLinkCubit extends Cubit<VerifyLinkState> {
     emit(
       const VerifyingLinkState(),
     );
-    
-    await Future.delayed(Duration(seconds: 5,),);
 
     final result = await _linkOpsRepository.verifyLink(
       link,

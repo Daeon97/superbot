@@ -7,6 +7,7 @@ import 'package:get_it/get_it.dart';
 import 'package:superbot/cubits/chats_cubit/chats_cubit.dart';
 import 'package:superbot/cubits/copy_link_cubit/copy_link_cubit.dart';
 import 'package:superbot/cubits/onboarding_cubit/onboarding_cubit.dart';
+import 'package:superbot/cubits/send_message_cubit/send_message_cubit.dart';
 import 'package:superbot/cubits/sign_in_cubit/sign_in_cubit.dart';
 import 'package:superbot/cubits/student_sign_up_cubit/student_sign_up_cubit.dart';
 import 'package:superbot/cubits/supervisor_sign_up_cubit/supervisor_sign_up_cubit.dart';
@@ -61,6 +62,12 @@ void registerServices() {
     ..registerFactory<VerifyLinkCubit>(
       () => VerifyLinkCubit(
         sl(),
+      ),
+    )
+    ..registerFactory<SendMessageCubit>(
+      () => SendMessageCubit(
+        chatRepository: sl(),
+        authRepository: sl(),
       ),
     )
 

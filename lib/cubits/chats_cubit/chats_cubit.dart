@@ -18,7 +18,9 @@ class ChatsCubit extends Cubit<ChatsState> {
   })  : _chatRepository = chatRepository,
         _authRepository = authRepository,
         super(
-          const ChatsInitialState(),
+          const ChatsState(
+            [],
+          ),
         );
 
   final ChatRepository _chatRepository;
@@ -53,7 +55,7 @@ class ChatsCubit extends Cubit<ChatsState> {
     List<Chat> chats,
   ) =>
       emit(
-        LoadedChatsState(
+        ChatsState(
           chats,
         ),
       );
