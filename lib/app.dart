@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:superbot/cubits/chats_cubit/chats_cubit.dart';
 import 'package:superbot/cubits/copy_link_cubit/copy_link_cubit.dart';
+import 'package:superbot/cubits/get_student_supervisor_cubit/get_student_supervisor_cubit.dart';
 import 'package:superbot/cubits/get_supervisor_students_cubit/get_supervisor_students_cubit.dart';
 import 'package:superbot/cubits/onboarding_cubit/onboarding_cubit.dart';
 import 'package:superbot/cubits/send_message_cubit/send_message_cubit.dart';
@@ -74,6 +75,9 @@ class App extends StatelessWidget {
           create: (_) => sl(),
         ),
         BlocProvider<GetSupervisorStudentsCubit>(
+          create: (_) => sl(),
+        ),
+        BlocProvider<GetStudentSupervisorCubit>(
           create: (_) => sl(),
         ),
       ];

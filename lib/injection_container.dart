@@ -6,6 +6,7 @@ import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:get_it/get_it.dart';
 import 'package:superbot/cubits/chats_cubit/chats_cubit.dart';
 import 'package:superbot/cubits/copy_link_cubit/copy_link_cubit.dart';
+import 'package:superbot/cubits/get_student_supervisor_cubit/get_student_supervisor_cubit.dart';
 import 'package:superbot/cubits/get_supervisor_students_cubit/get_supervisor_students_cubit.dart';
 import 'package:superbot/cubits/onboarding_cubit/onboarding_cubit.dart';
 import 'package:superbot/cubits/send_message_cubit/send_message_cubit.dart';
@@ -53,7 +54,6 @@ void registerServices() {
       () => CopyLinkCubit(
         linkOpsRepository: sl(),
         authRepository: sl(),
-        databaseOpsRepository: sl(),
       ),
     )
     ..registerFactory<ChatsCubit>(
@@ -80,6 +80,12 @@ void registerServices() {
     )
     ..registerFactory<GetSupervisorStudentsCubit>(
       () => GetSupervisorStudentsCubit(
+        authRepository: sl(),
+        databaseOpsRepository: sl(),
+      ),
+    )
+    ..registerFactory<GetStudentSupervisorCubit>(
+          () => GetStudentSupervisorCubit(
         authRepository: sl(),
         databaseOpsRepository: sl(),
       ),

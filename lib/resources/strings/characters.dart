@@ -5,3 +5,4 @@ const tabSpace = '  ';
 const forwardSlash = '/';
 const comma = ',';
 const fullStop = '.';
+const threeDots = '...';

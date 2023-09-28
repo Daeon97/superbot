@@ -12,7 +12,7 @@ abstract interface class LinkOpsRepository {
   );
 
   Future<void> copyLinkToClipboard(
-    String text,
+    String uid,
   );
 
   Future<bool> verifyLink(
@@ -47,11 +47,16 @@ final class LinkOpsRepositoryImplementation implements LinkOpsRepository {
 
   @override
   Future<void> copyLinkToClipboard(
-    String text,
-  ) =>
-      _clipboardService.setData(
-        text,
-      );
+    String uid,
+  ) async {
+    final inviteLink =
+        (await _database.collection(usersCollection).doc(uid).get())
+            .data()![inviteLinkField] as String;
+    await _clipboardService.setData(
+      inviteLink,
+    );
+    return;
+  }
 
   @override
   Future<bool> verifyLink(

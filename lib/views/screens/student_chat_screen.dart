@@ -3,10 +3,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:superbot/cubits/chats_cubit/chats_cubit.dart';
+import 'package:superbot/cubits/get_student_supervisor_cubit/get_student_supervisor_cubit.dart';
 import 'package:superbot/cubits/send_message_cubit/send_message_cubit.dart';
 import 'package:superbot/cubits/sign_out_cubit/sign_out_cubit.dart';
 import 'package:superbot/resources/colors.dart';
 import 'package:superbot/resources/numbers.dart';
+import 'package:superbot/resources/strings/characters.dart';
 import 'package:superbot/resources/strings/routes.dart';
 import 'package:superbot/resources/strings/ui.dart';
 import 'package:superbot/utils/enums.dart' as enums;
@@ -29,6 +31,7 @@ class _StudentChatScreenState extends State<StudentChatScreen> {
     _messageFieldController = TextEditingController();
 
     context.read<ChatsCubit>().listenChats();
+    context.read<GetStudentSupervisorCubit>().studentSupervisor;
 
     super.initState();
   }
@@ -57,8 +60,17 @@ class _StudentChatScreenState extends State<StudentChatScreen> {
         },
         child: Scaffold(
           appBar: AppBar(
-            title: const Text(
-              'Supervisor name should be here',
+            title: BlocBuilder<GetStudentSupervisorCubit,
+                GetStudentSupervisorState>(
+              builder: (_, getStudentSupervisorState) => Text(
+                switch (getStudentSupervisorState) {
+                  GetStudentSupervisorSuccessState(
+                    supervisor: final supvsr,
+                  ) =>
+                    supvsr.name,
+                  _ => threeDots,
+                },
+              ),
             ),
             centerTitle: true,
             actions: [

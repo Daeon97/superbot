@@ -131,9 +131,12 @@ class _SupervisorHomeScreenState extends State<SupervisorHomeScreen> {
                                 ),
                               ),
                             ),
-                            onPressed: () => context
-                                .read<CopyLinkCubit>()
-                                .copyInviteLinkToClipboard(),
+                            onPressed: () {
+                              context
+                                  .read<CopyLinkCubit>()
+                                  .copyInviteLinkToClipboard();
+                              Navigator.of(context).pop();
+                            },
                             child: Center(
                               child: Text(
                                 copyLink,

@@ -12,27 +12,23 @@ class CopyLinkCubit extends Cubit<CopyLinkState> {
   CopyLinkCubit({
     required LinkOpsRepository linkOpsRepository,
     required AuthRepository authRepository,
-    required DatabaseOpsRepository databaseOpsRepository,
   })  : _linkOpsRepository = linkOpsRepository,
         _authRepository = authRepository,
-        _databaseOpsRepository = databaseOpsRepository,
         super(
           const CopyLinkInitialState(),
         );
 
   final LinkOpsRepository _linkOpsRepository;
   final AuthRepository _authRepository;
-  final DatabaseOpsRepository _databaseOpsRepository;
 
-  // ignore: avoid_setters_without_getters
   Future<void> copyInviteLinkToClipboard() async {
     emit(
       const CopyingLinkState(),
     );
 
-    final userId = _authRepository.user!.uid;
-
-    // _clipboardRepository.data = text;
+    await _linkOpsRepository.copyLinkToClipboard(
+      _authRepository.user!.uid,
+    );
 
     emit(
       const CopyLinkSuccessState(),
