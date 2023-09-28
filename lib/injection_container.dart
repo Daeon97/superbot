@@ -6,9 +6,11 @@ import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:get_it/get_it.dart';
 import 'package:superbot/cubits/chats_cubit/chats_cubit.dart';
 import 'package:superbot/cubits/copy_link_cubit/copy_link_cubit.dart';
+import 'package:superbot/cubits/get_supervisor_students_cubit/get_supervisor_students_cubit.dart';
 import 'package:superbot/cubits/onboarding_cubit/onboarding_cubit.dart';
 import 'package:superbot/cubits/send_message_cubit/send_message_cubit.dart';
 import 'package:superbot/cubits/sign_in_cubit/sign_in_cubit.dart';
+import 'package:superbot/cubits/sign_out_cubit/sign_out_cubit.dart';
 import 'package:superbot/cubits/student_sign_up_cubit/student_sign_up_cubit.dart';
 import 'package:superbot/cubits/supervisor_sign_up_cubit/supervisor_sign_up_cubit.dart';
 import 'package:superbot/cubits/verify_link_cubit/verify_link_cubit.dart';
@@ -20,6 +22,7 @@ import 'package:superbot/resources/strings/local.dart';
 import 'package:superbot/resources/strings/networking.dart';
 import 'package:superbot/services/chat_service.dart';
 import 'package:superbot/services/clipboard_service.dart';
+import 'package:superbot/services/database_ops_service.dart';
 import 'package:superbot/services/link_generator_service.dart';
 import 'package:superbot/utils/clients/http_client.dart';
 
@@ -70,6 +73,17 @@ void registerServices() {
         authRepository: sl(),
       ),
     )
+    ..registerFactory<SignOutCubit>(
+      () => SignOutCubit(
+        sl(),
+      ),
+    )
+    ..registerFactory<GetSupervisorStudentsCubit>(
+      () => GetSupervisorStudentsCubit(
+        authRepository: sl(),
+        databaseOpsRepository: sl(),
+      ),
+    )
 
     // Repositories
     ..registerLazySingleton<AuthRepository>(
@@ -88,7 +102,8 @@ void registerServices() {
     )
     ..registerLazySingleton<DatabaseOpsRepository>(
       () => DatabaseOpsRepositoryImplementation(
-        sl(),
+        databaseOpsService: sl(),
+        firebaseFirestore: sl(),
       ),
     )
     ..registerLazySingleton<ChatRepository>(
@@ -111,6 +126,11 @@ void registerServices() {
           instanceName: forChatsInstanceName,
         ),
         firebaseFirestore: sl(),
+      ),
+    )
+    ..registerLazySingleton<DatabaseOpsService>(
+      () => DatabaseOpsServiceImplementation(
+        sl(),
       ),
     )
 

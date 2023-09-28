@@ -4,7 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:superbot/models/failure.dart';
-import 'package:superbot/repositories/link_ops_repository.dart';
 import 'package:superbot/resources/strings/networking.dart';
 import 'package:superbot/resources/strings/ui.dart';
 import 'package:superbot/services/link_generator_service.dart';

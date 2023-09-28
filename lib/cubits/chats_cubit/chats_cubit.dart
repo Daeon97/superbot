@@ -28,7 +28,9 @@ class ChatsCubit extends Cubit<ChatsState> {
 
   StreamSubscription<List<Chat>>? _chatsStreamSubscription;
 
-  Future<void> listenChats() async {
+  Future<void> listenChats({
+    String? uid,
+  }) async {
     if (_chatsStreamSubscription != null) {
       await _chatsStreamSubscription!.cancel();
       _chatsStreamSubscription = null;
@@ -36,7 +38,7 @@ class ChatsCubit extends Cubit<ChatsState> {
 
     _chatsStreamSubscription = _chatRepository
         .getChats(
-          uid: _authRepository.user!.uid,
+          uid: uid ?? _authRepository.user!.uid,
           userType: await _authRepository.user!.type,
         )
         .listen(

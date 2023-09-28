@@ -1,13 +1,15 @@
-// ignore_for_file: public_member_api_docs
+// ignore_for_file: public_member_api_docs, strict_raw_type
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:superbot/cubits/chats_cubit/chats_cubit.dart';
 import 'package:superbot/cubits/copy_link_cubit/copy_link_cubit.dart';
+import 'package:superbot/cubits/get_supervisor_students_cubit/get_supervisor_students_cubit.dart';
 import 'package:superbot/cubits/onboarding_cubit/onboarding_cubit.dart';
 import 'package:superbot/cubits/send_message_cubit/send_message_cubit.dart';
 import 'package:superbot/cubits/sign_in_cubit/sign_in_cubit.dart';
+import 'package:superbot/cubits/sign_out_cubit/sign_out_cubit.dart';
 import 'package:superbot/cubits/student_sign_up_cubit/student_sign_up_cubit.dart';
 import 'package:superbot/cubits/supervisor_sign_up_cubit/supervisor_sign_up_cubit.dart';
 import 'package:superbot/cubits/verify_link_cubit/verify_link_cubit.dart';
@@ -39,7 +41,7 @@ class App extends StatelessWidget {
               // brightness: Brightness.dark,
             ),
           ),
-          routes: _routes,
+          onGenerateRoute: _routes,
         ),
       );
 
@@ -68,11 +70,21 @@ class App extends StatelessWidget {
         BlocProvider<SendMessageCubit>(
           create: (_) => sl(),
         ),
+        BlocProvider<SignOutCubit>(
+          create: (_) => sl(),
+        ),
+        BlocProvider<GetSupervisorStudentsCubit>(
+          create: (_) => sl(),
+        ),
       ];
 
-  Map<String, WidgetBuilder> get _routes => {
-        defaultScreenRoute: (context) =>
-            switch (context.read<OnboardingCubit>().state.show) {
+  Route _routes(
+    RouteSettings settings,
+  ) =>
+      MaterialPageRoute(
+        builder: (context) => switch (settings.name) {
+          defaultScreenRoute => switch (
+                context.read<OnboardingCubit>().state.show) {
               false when sl<FirebaseAuth>().currentUser == null =>
                 const SignInScreen(),
               false when sl<FirebaseAuth>().currentUser != null =>
@@ -91,12 +103,17 @@ class App extends StatelessWidget {
                 ),
               _ => const OnboardingScreen(),
             },
-        onboardingScreenRoute: (_) => const OnboardingScreen(),
-        signInScreenRoute: (_) => const SignInScreen(),
-        studentSignUpScreenRoute: (_) => const StudentSignUpScreen(),
-        studentChatScreenRoute: (_) => const StudentChatScreen(),
-        supervisorSignUpScreenRoute: (_) => const SupervisorSignUpScreen(),
-        supervisorHomeScreenRoute: (_) => const SupervisorHomeScreen(),
-        supervisorChatScreenRoute: (_) => const SupervisorChatScreen(),
-      };
+          onboardingScreenRoute => const OnboardingScreen(),
+          signInScreenRoute => const SignInScreen(),
+          studentSignUpScreenRoute => const StudentSignUpScreen(),
+          studentChatScreenRoute => const StudentChatScreen(),
+          supervisorSignUpScreenRoute => const SupervisorSignUpScreen(),
+          supervisorHomeScreenRoute => const SupervisorHomeScreen(),
+          supervisorChatScreenRoute => SupervisorChatScreen(
+              uid: (settings.arguments! as Set<String>).first,
+              name: (settings.arguments! as Set<String>).last,
+            ),
+          _ => Container(),
+        },
+      );
 }
