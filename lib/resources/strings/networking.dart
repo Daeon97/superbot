@@ -30,8 +30,6 @@ const dynamicLinkUriPrefix = 'https://superbotc4b75.page.link';
 const packageName = 'com.engels_immanuel.superbot';
 
 const linkParamName = 'link';
-// https://superbot.com/sampleuid/studentSignUp
-// https://superbotc4b75.page.link?apn=com.engels_immanuel.superbot&link=https%3A%2F%2Fsuperbot.com%2Fsampleuid%2FstudentSignUp
 
 const contentTypeKey = 'Content-Type';
 const contentTypeValue = 'application/json';

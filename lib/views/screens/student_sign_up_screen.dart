@@ -164,7 +164,7 @@ class _StudentSignUpScreenState extends State<StudentSignUpScreen> {
                                 keyboardType: TextInputType.name,
                                 textInputAction: TextInputAction.next,
                                 enabled:
-                                    verifyLinkState is! VerifyingLinkState ||
+                                    verifyLinkState is! VerifyingLinkState &&
                                         studentSignUpState
                                             is! SigningUpStudentState,
                                 decoration: const InputDecoration(
@@ -196,7 +196,7 @@ class _StudentSignUpScreenState extends State<StudentSignUpScreen> {
                                 keyboardType: TextInputType.emailAddress,
                                 textInputAction: TextInputAction.done,
                                 enabled:
-                                    verifyLinkState is! VerifyingLinkState ||
+                                    verifyLinkState is! VerifyingLinkState &&
                                         studentSignUpState
                                             is! SigningUpStudentState,
                                 decoration: const InputDecoration(
@@ -255,7 +255,7 @@ class _StudentSignUpScreenState extends State<StudentSignUpScreen> {
                                     ),
                                   ),
                                   onChanged:
-                                      verifyLinkState is! VerifyingLinkState ||
+                                      verifyLinkState is! VerifyingLinkState &&
                                               studentSignUpState
                                                   is! SigningUpStudentState
                                           ? (value) =>
@@ -315,7 +315,7 @@ class _StudentSignUpScreenState extends State<StudentSignUpScreen> {
                                     ),
                                   ),
                                   onChanged: verifyLinkState
-                                              is! VerifyingLinkState ||
+                                              is! VerifyingLinkState &&
                                           studentSignUpState
                                               is! SigningUpStudentState
                                       ? (value) =>
@@ -344,7 +344,7 @@ class _StudentSignUpScreenState extends State<StudentSignUpScreen> {
                                 keyboardType: TextInputType.text,
                                 textInputAction: TextInputAction.next,
                                 enabled:
-                                    verifyLinkState is! VerifyingLinkState ||
+                                    verifyLinkState is! VerifyingLinkState &&
                                         studentSignUpState
                                             is! SigningUpStudentState,
                                 decoration: const InputDecoration(
@@ -376,7 +376,7 @@ class _StudentSignUpScreenState extends State<StudentSignUpScreen> {
                                 keyboardType: TextInputType.text,
                                 textInputAction: TextInputAction.next,
                                 enabled:
-                                    verifyLinkState is! VerifyingLinkState ||
+                                    verifyLinkState is! VerifyingLinkState &&
                                         studentSignUpState
                                             is! SigningUpStudentState,
                                 decoration: const InputDecoration(
@@ -413,7 +413,7 @@ class _StudentSignUpScreenState extends State<StudentSignUpScreen> {
                                   textInputAction: TextInputAction.done,
                                   obscureText: obscurePassword,
                                   enabled:
-                                      verifyLinkState is! VerifyingLinkState ||
+                                      verifyLinkState is! VerifyingLinkState &&
                                           studentSignUpState
                                               is! SigningUpStudentState,
                                   decoration: InputDecoration(
@@ -477,7 +477,7 @@ class _StudentSignUpScreenState extends State<StudentSignUpScreen> {
                                   textInputAction: TextInputAction.done,
                                   obscureText: obscureConfirmPassword,
                                   enabled:
-                                      verifyLinkState is! VerifyingLinkState ||
+                                      verifyLinkState is! VerifyingLinkState &&
                                           studentSignUpState
                                               is! SigningUpStudentState,
                                   decoration: InputDecoration(
@@ -548,7 +548,7 @@ class _StudentSignUpScreenState extends State<StudentSignUpScreen> {
                                   ),
                                 ),
                                 onPressed: verifyLinkState
-                                            is! VerifyingLinkState ||
+                                            is! VerifyingLinkState &&
                                         studentSignUpState
                                             is! SigningUpStudentState
                                     ? () {
@@ -565,7 +565,7 @@ class _StudentSignUpScreenState extends State<StudentSignUpScreen> {
                                     : null,
                                 child: Center(
                                   child:
-                                      verifyLinkState is! VerifyingLinkState ||
+                                      verifyLinkState is! VerifyingLinkState &&
                                               studentSignUpState
                                                   is! SigningUpStudentState
                                           ? Text(
@@ -620,7 +620,7 @@ class _StudentSignUpScreenState extends State<StudentSignUpScreen> {
                                           ),
                                       recognizer: TapGestureRecognizer()
                                         ..onTap = verifyLinkState
-                                                    is! VerifyingLinkState ||
+                                                    is! VerifyingLinkState &&
                                                 studentSignUpState
                                                     is! SigningUpStudentState
                                             ? () => Navigator.of(context)
