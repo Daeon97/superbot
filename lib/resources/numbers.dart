@@ -42,3 +42,8 @@ const requestSendTimeoutSeconds = 50;
 
 const chatBorderRadius = 12.0;
 const studentsBorderRadius = 19.0;
+
+
+const waitTimeBeforeScrollingToEndOfChat = 200;
+
+const chatsListViewScrollAnimationDuration = 300;

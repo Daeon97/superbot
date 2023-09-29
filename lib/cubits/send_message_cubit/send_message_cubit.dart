@@ -2,7 +2,6 @@
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:superbot/models/failure.dart';
 import 'package:superbot/repositories/auth_repository.dart';
 import 'package:superbot/repositories/chat_repository.dart';
 

@@ -118,7 +118,7 @@ final class ChatRepositoryImplementation implements ChatRepository {
       );
 
       await thisChatDocumentReference.update({
-        deliveryStatusField: enums.MessageDeliveryStatus.sent,
+        deliveryStatusField: enums.MessageDeliveryStatus.sent.name,
       });
 
       final reply = Chat(
@@ -133,7 +133,7 @@ final class ChatRepositoryImplementation implements ChatRepository {
           );
     } catch (_) {
       await thisChatDocumentReference.update({
-        deliveryStatusField: enums.MessageDeliveryStatus.failed,
+        deliveryStatusField: enums.MessageDeliveryStatus.failed.name,
       });
     }
   }

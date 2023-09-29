@@ -23,11 +23,29 @@ class SupervisorChatScreen extends StatefulWidget {
 }
 
 class _SupervisorChatScreenState extends State<SupervisorChatScreen> {
+  late final ScrollController _chatsListViewScrollController;
+  late final ValueNotifier<bool> _scrollNotifier;
+
   @override
   void initState() {
     context.read<ChatsCubit>().listenChats(
           uid: widget.uid,
         );
+
+    _scrollNotifier = ValueNotifier<bool>(
+      true,
+    );
+    _chatsListViewScrollController = ScrollController(
+      onAttach: (scrollPosition) async {
+        await Future<void>.delayed(
+          const Duration(
+            milliseconds: waitTimeBeforeScrollingToEndOfChat,
+          ),
+        );
+        await _animateToEnd();
+        _scrollNotifier.value = false;
+      },
+    );
 
     super.initState();
   }
@@ -37,6 +55,21 @@ class _SupervisorChatScreenState extends State<SupervisorChatScreen> {
     context.read<ChatsCubit>().stopListeningChats();
     super.deactivate();
   }
+
+  @override
+  void dispose() {
+    _scrollNotifier.dispose();
+    _chatsListViewScrollController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _animateToEnd() => _chatsListViewScrollController.animateTo(
+    _chatsListViewScrollController.position.maxScrollExtent,
+    duration: const Duration(
+      milliseconds: chatsListViewScrollAnimationDuration,
+    ),
+    curve: Curves.easeIn,
+  );
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -49,6 +82,7 @@ class _SupervisorChatScreenState extends State<SupervisorChatScreen> {
         body: SafeArea(
           child: BlocBuilder<ChatsCubit, ChatsState>(
             builder: (_, chatsState) => ListView.builder(
+              controller: _chatsListViewScrollController,
               itemCount: chatsState.chats.length,
               itemBuilder: (__, index) => Row(
                 children: [

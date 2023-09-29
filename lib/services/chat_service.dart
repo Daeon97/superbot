@@ -39,6 +39,9 @@ final class ChatServiceImplementation implements ChatService {
           .collection(
             chatsCollection,
           )
+          .orderBy(
+            sentAtField,
+          )
           .snapshots();
 
   @override

@@ -24,6 +24,8 @@ class StudentChatScreen extends StatefulWidget {
 class _StudentChatScreenState extends State<StudentChatScreen> {
   late final GlobalKey<FormState> _formKey;
   late final TextEditingController _messageFieldController;
+  late final ScrollController _chatsListViewScrollController;
+  late final ValueNotifier<bool> _scrollNotifier;
 
   @override
   void initState() {
@@ -32,6 +34,21 @@ class _StudentChatScreenState extends State<StudentChatScreen> {
 
     context.read<ChatsCubit>().listenChats();
     context.read<GetStudentSupervisorCubit>().studentSupervisor;
+
+    _scrollNotifier = ValueNotifier<bool>(
+      true,
+    );
+    _chatsListViewScrollController = ScrollController(
+      onAttach: (scrollPosition) async {
+        await Future<void>.delayed(
+          const Duration(
+            milliseconds: waitTimeBeforeScrollingToEndOfChat,
+          ),
+        );
+        await _animateToEnd();
+        _scrollNotifier.value = false;
+      },
+    );
 
     super.initState();
   }
@@ -45,19 +62,39 @@ class _StudentChatScreenState extends State<StudentChatScreen> {
   @override
   void dispose() {
     _messageFieldController.dispose();
+    _scrollNotifier.dispose();
+    _chatsListViewScrollController.dispose();
     super.dispose();
   }
 
+  Future<void> _animateToEnd() => _chatsListViewScrollController.animateTo(
+    _chatsListViewScrollController.position.maxScrollExtent,
+    duration: const Duration(
+      milliseconds: chatsListViewScrollAnimationDuration,
+    ),
+    curve: Curves.easeIn,
+  );
+
   @override
-  Widget build(BuildContext context) =>
-      BlocListener<SignOutCubit, SignOutState>(
-        listener: (_, signOutState) {
-          if (signOutState is SignOutSuccessState) {
-            Navigator.of(context).pushReplacementNamed(
-              signInScreenRoute,
-            );
-          }
-        },
+  Widget build(BuildContext context) => MultiBlocListener(
+        listeners: [
+          BlocListener<SignOutCubit, SignOutState>(
+            listener: (_, signOutState) {
+              if (signOutState is SignOutSuccessState) {
+                Navigator.of(context).pushReplacementNamed(
+                  signInScreenRoute,
+                );
+              }
+            },
+          ),
+          BlocListener<SendMessageCubit, SendMessageState>(
+            listener: (_, sendMessageState) {
+              if (sendMessageState is SendMessageSuccessState) {
+                _messageFieldController.clear();
+              }
+            },
+          ),
+        ],
         child: Scaffold(
           appBar: AppBar(
             title: BlocBuilder<GetStudentSupervisorCubit,
@@ -88,6 +125,7 @@ class _StudentChatScreenState extends State<StudentChatScreen> {
                 Expanded(
                   child: BlocBuilder<ChatsCubit, ChatsState>(
                     builder: (_, chatsState) => ListView.builder(
+                      controller: _chatsListViewScrollController,
                       itemCount: chatsState.chats.length,
                       itemBuilder: (__, index) => Row(
                         children: [
